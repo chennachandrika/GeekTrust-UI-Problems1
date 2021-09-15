@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import planets from "./planets";
+import findFalcone from "./findFalcone";
 
 export default combineReducers({
-  planets
+  findFalcone
 });

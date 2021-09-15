@@ -1,4 +1,4 @@
-import FindFalcon from "./components/FineFalcon";
+import FindFalcone from "./components/FineFalcon";
 import { AppContainer } from "./styledComponents";
 import configureStore from "./store/configureStore";
 import { Provider } from "react-redux";
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <AppContainer>
-        <FindFalcon />
+        <FindFalcone />
       </AppContainer>
     </Provider>
   );
