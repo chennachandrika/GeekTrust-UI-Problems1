@@ -1,25 +1,27 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import Header from "../Header";
 import Planets from "../Planets";
 import Vehicals from "../Vehicals";
-import { useSelector, useDispatch } from "react-redux";
-import { loadPlanets } from "../../store/planets";
+
+import { loadPlanets, loadVehicals } from "../../store/findFalcone";
 import { MainContainer, Footer, ReferenceLink } from "./styledComponents";
 
-const FindFalcon = () => {
-  const plantesData = useSelector((store) => store.entities.planets);
+const FindFalcone = () => {
+  const plantesData = useSelector(
+    (store) => store.entities.findFalcone.planetsData
+  );
   const dispatch = useDispatch();
-  const getThings = () => {
+  useEffect(() => {
     dispatch(loadPlanets());
-  };
-
-  console.log(plantesData);
+    dispatch(loadVehicals());
+  });
   return (
     <>
       <Header />
       <MainContainer>
         <Planets />
         <Vehicals />
-        <button onClick={getThings}>Get</button>
       </MainContainer>
       <Footer>
         <ReferenceLink href="https://www.geektrust.in/coding-problem/frontend/space">
@@ -31,4 +33,4 @@ const FindFalcon = () => {
   );
 };
 
-export default FindFalcon;
+export default FindFalcone;
