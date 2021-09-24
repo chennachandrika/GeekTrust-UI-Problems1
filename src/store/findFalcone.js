@@ -19,6 +19,7 @@ const slice = createSlice({
   name: "findFalcone",
   initialState: {
     selectedData: selectedDefaultData,
+    totalDistance: 0,
     isPlanetsDataLoading: false,
     planetsData: [],
     isVehicalsDataLoading: false,
@@ -49,16 +50,40 @@ const slice = createSlice({
       findFalcone.isVehicalsDataLoading = false;
     },
     planetSelected: (findFalcone, action) => {
-      findFalcone.selectedData[action.payload.id].selectedPlanet =
-        action.payload.selectedPlanet;
-      const selectedPlanetData = findFalcone.planetsData.filter((data) => {
-        if (data.name === action.payload.selectedPlanet) return data.distance;
-        return null;
+      const { id, selectedPlanet, selectedPlanetDistance } = action.payload;
+      const { selectedData, vehicalsData, planetsData } = findFalcone;
+
+      selectedData[id].selectedPlanet = selectedPlanet;
+      selectedData[id].selectedPlanetDistance = selectedPlanetDistance;
+
+      selectedData[id].availableVehicals = vehicalsData.filter(
+        (vehical) => vehical.max_distance >= selectedPlanetDistance
+      );
+
+      //del selected one planet data from planetsData
+      planetsData.map((planet) => planet.name !== selectedPlanet);
+      //assigining available planets to all other
+      selectedData.map((data, index) => {
+        if (index !== id) {
+          data.availablePlanets = data.availablePlanets.filter(
+            (planet) => planet.name !== selectedPlanet
+          );
+          return data;
+        }
+        return data;
       });
-      findFalcone.selectedData[action.payload.id].selectedPlanetDistance =
-        selectedPlanetData[0].distance;
-      findFalcone.selectedData[action.payload.id].availableVehicals =
-        findFalcone.vehicalsData;
+    },
+    vehicalSelected: (findFalcone, action) => {
+      const { id, selectedVehical } = action.payload;
+      const { selectedData, vehicalsData } = findFalcone;
+      selectedData[id].selectedVehical = selectedVehical;
+      vehicalsData.map((vehical) => {
+        if (vehical.name === selectedVehical) {
+          vehical.total_no -= 1;
+          return vehical;
+        }
+        return vehical;
+      });
     }
   }
 });
@@ -70,7 +95,8 @@ export const {
   vehicalsRequested,
   vehicalsReceived,
   vehicalsFailed,
-  planetSelected
+  planetSelected,
+  vehicalSelected
 } = slice.actions;
 
 export default slice.reducer;

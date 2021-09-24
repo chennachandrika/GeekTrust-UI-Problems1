@@ -9,9 +9,22 @@ const Planets = (props) => {
   const [selectedPlanet, setPlanet] = useState(null);
 
   const dispatch = useDispatch();
+  const getPlanetDistance = (planetName) => {
+    const planetDistance = planetsInfo.filter(
+      (planet) => planet.name === planetName
+    )[0].distance;
+
+    return planetDistance;
+  };
   const onChangePlanet = (event) => {
     setPlanet(event.target.value);
-    dispatch(planetSelected({ id, selectedPlanet: event.target.value }));
+    dispatch(
+      planetSelected({
+        id,
+        selectedPlanet: event.target.value,
+        selectedPlanetDistance: getPlanetDistance(event.target.value)
+      })
+    );
   };
   return (
     <Item>
