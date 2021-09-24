@@ -36,7 +36,13 @@ const Planets = (props) => {
           </Option>
         ))}
       </CustomSelect>
-      {vehicalsInfo && <Vehicals id={id} vehicalsData={vehicalsInfo} />}
+      {vehicalsInfo && (
+        <Vehicals
+          id={id}
+          planetName={selectedPlanet}
+          vehicalsData={vehicalsInfo}
+        />
+      )}
     </Item>
   );
 };

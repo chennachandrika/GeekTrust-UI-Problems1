@@ -8,12 +8,18 @@ import {
   MainContainer,
   ChoosePlanetsContainer,
   Footer,
-  ReferenceLink
+  ReferenceLink,
+  Heading,
+  Para,
+  PlanetsHolder
 } from "./styledComponents";
 
 const FindFalcone = () => {
   const selectedData = useSelector(
     (store) => store.entities.findFalcone.selectedData
+  );
+  const totalTimeTaken = useSelector(
+    (store) => store.entities.findFalcone.totalTimeTaken
   );
   const isPlanetsDataLoading = useSelector(
     (store) => store.entities.findFalcone.isPlanetsDataLoading
@@ -28,15 +34,20 @@ const FindFalcone = () => {
     <>
       <Header />
       <MainContainer>
+        <Heading>Select planets you wants to search in:</Heading>
+        <Heading>Time Taken: {totalTimeTaken}</Heading>
         <ChoosePlanetsContainer>
           {!isPlanetsDataLoading &&
             selectedData.map((planetsInfo, index) => (
-              <Planets
-                key={index}
-                id={planetsInfo.id}
-                planetsInfo={planetsInfo.availablePlanets}
-                vehicalsInfo={planetsInfo.availableVehicals}
-              />
+              <PlanetsHolder>
+                <Para>Direction {index + 1}</Para>
+                <Planets
+                  key={index}
+                  id={planetsInfo.id}
+                  planetsInfo={planetsInfo.availablePlanets}
+                  vehicalsInfo={planetsInfo.availableVehicals}
+                />
+              </PlanetsHolder>
             ))}
         </ChoosePlanetsContainer>
       </MainContainer>

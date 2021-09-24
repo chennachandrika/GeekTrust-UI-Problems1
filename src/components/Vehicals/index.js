@@ -3,7 +3,7 @@ import { vehicalSelected } from "../../store/findFalcone";
 import { RadioWrapper, RadioButton, Label } from "./styledComponents";
 
 const Vehicals = (props) => {
-  const { vehicalsData, id } = props;
+  const { vehicalsData, id, planetName } = props;
   const dispatch = useDispatch();
   const onChangeVehical = (event) => {
     dispatch(vehicalSelected({ id: id, selectedVehical: event.target.value }));
@@ -14,15 +14,16 @@ const Vehicals = (props) => {
       {vehicalsData &&
         vehicalsData.map((vehical, index) => (
           <RadioWrapper
-            key={`vehical ${vehical.name} ${index}`}
+            key={`vehical ${planetName} ${index}`}
             onChange={onChangeVehical}
           >
             <RadioButton
               type="radio"
-              name={`vehical ${index}`}
+              id={`vehical ${planetName} ${index}`}
+              name={planetName}
               value={vehical.name}
             />
-            <Label htmlFor={`vehical ${index}`}>
+            <Label htmlFor={`vehical ${planetName} ${index}`}>
               {vehical.name} ({vehical.total_no})
             </Label>
           </RadioWrapper>
