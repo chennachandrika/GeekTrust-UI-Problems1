@@ -11,7 +11,8 @@ import {
   ReferenceLink,
   Heading,
   Para,
-  PlanetsHolder
+  PlanetsHolder,
+  Button
 } from "./styledComponents";
 
 const FindFalcone = () => {
@@ -39,7 +40,7 @@ const FindFalcone = () => {
         <ChoosePlanetsContainer>
           {!isPlanetsDataLoading &&
             selectedData.map((planetsInfo, index) => (
-              <PlanetsHolder>
+              <PlanetsHolder key={index}>
                 <Para>Direction {index + 1}</Para>
                 <Planets
                   key={index}
@@ -51,7 +52,9 @@ const FindFalcone = () => {
             ))}
         </ChoosePlanetsContainer>
       </MainContainer>
+
       <Footer>
+        <Button type="button">Find Falcone</Button>
         <ReferenceLink href="https://www.geektrust.in/coding-problem/frontend/space">
           Coding Problem :
           https://www.geektrust.in/coding-problem/frontend/space

@@ -74,8 +74,9 @@ const slice = createSlice({
       });
     },
     vehicalSelected: (findFalcone, action) => {
-      const { id, selectedVehical } = action.payload;
+      const { id, selectedVehical, vehicalspeed } = action.payload;
       const { selectedData, vehicalsData } = findFalcone;
+
       selectedData[id].selectedVehical = selectedVehical;
       vehicalsData.map((vehical) => {
         if (vehical.name === selectedVehical && vehical.total_no > 0) {
@@ -86,11 +87,10 @@ const slice = createSlice({
       });
 
       const { selectedPlanetDistance } = selectedData[id];
-      const vehicalData = vehicalsData.filter(
-        (vehical) => vehical.name === selectedVehical
+
+      findFalcone.totalTimeTaken += Math.ceil(
+        selectedPlanetDistance / vehicalspeed
       );
-      console.log(vehicalsData);
-      // findFalcone.totalTimeTaken = Math.ceil(selectedPlanetDistance / speed);
     }
   }
 });

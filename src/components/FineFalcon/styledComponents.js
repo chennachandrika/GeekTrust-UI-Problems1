@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Heading = styled.h1``;
+export const Button = styled.button``;
 export const Para = styled.p`
   padding: 0;
   margin: 0;
@@ -32,6 +33,9 @@ export const ChoosePlanetsContainer = styled.ul`
 `;
 export const Footer = styled.div`
   margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const ReferenceLink = styled.a``;

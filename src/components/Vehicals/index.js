@@ -5,8 +5,22 @@ import { RadioWrapper, RadioButton, Label } from "./styledComponents";
 const Vehicals = (props) => {
   const { vehicalsData, id, planetName } = props;
   const dispatch = useDispatch();
+  const getVehicalSpeed = (vehicalName) => {
+    const vehicalSpeed = vehicalsData.filter(
+      (vehical) => vehical.name === vehicalName
+    );
+    console.log(vehicalSpeed, vehicalSpeed[0].speed);
+
+    return vehicalSpeed[0].speed;
+  };
   const onChangeVehical = (event) => {
-    dispatch(vehicalSelected({ id: id, selectedVehical: event.target.value }));
+    dispatch(
+      vehicalSelected({
+        id: id,
+        selectedVehical: event.target.value,
+        vehicalspeed: getVehicalSpeed(event.target.value)
+      })
+    );
   };
 
   return (
@@ -22,6 +36,7 @@ const Vehicals = (props) => {
               id={`vehical ${planetName} ${index}`}
               name={planetName}
               value={vehical.name}
+              disabled={vehical.total_no === 0}
             />
             <Label htmlFor={`vehical ${planetName} ${index}`}>
               {vehical.name} ({vehical.total_no})
