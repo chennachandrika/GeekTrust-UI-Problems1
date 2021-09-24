@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../Header";
 import Planets from "../Planets";
 
@@ -16,6 +16,7 @@ import {
 } from "./styledComponents";
 
 const FindFalcone = () => {
+  const [isVehicalsSelected, setStatus] = useState(false);
   const selectedData = useSelector(
     (store) => store.entities.findFalcone.selectedData
   );
@@ -27,6 +28,14 @@ const FindFalcone = () => {
   );
 
   const dispatch = useDispatch();
+  const checkVehicals = () => {
+    const vehicals = selectedData.map((data) => data.selectedVehical);
+    console.log(vehicals);
+  };
+  useEffect(() => {
+    checkVehicals();
+  });
+
   useEffect(() => {
     dispatch(loadPlanets());
     dispatch(loadVehicals());
@@ -38,7 +47,9 @@ const FindFalcone = () => {
         <Heading>Select planets you wants to search in:</Heading>
         <Heading>Time Taken: {totalTimeTaken}</Heading>
         <ChoosePlanetsContainer>
-          {!isPlanetsDataLoading &&
+          {isPlanetsDataLoading ? (
+            <Para>Loading...</Para>
+          ) : (
             selectedData.map((planetsInfo, index) => (
               <PlanetsHolder key={index}>
                 <Para>Direction {index + 1}</Para>
@@ -49,7 +60,8 @@ const FindFalcone = () => {
                   vehicalsInfo={planetsInfo.availableVehicals}
                 />
               </PlanetsHolder>
-            ))}
+            ))
+          )}
         </ChoosePlanetsContainer>
       </MainContainer>
 
