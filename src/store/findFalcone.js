@@ -2,45 +2,75 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import * as actions from "./api";
 
+const planetInfo = {
+  selectedPlanet: "",
+  selectedVehical: "",
+  selectedPlanetDistance: "",
+  availablePlanets: [],
+  availableVehicals: []
+};
+const selectedDefaultData = [];
+
+for (let i = 0; i < 4; i++) {
+  selectedDefaultData.push({ ...planetInfo, id: i });
+}
+
 const slice = createSlice({
   name: "findFalcone",
   initialState: {
+    selectedData: selectedDefaultData,
     isPlanetsDataLoading: false,
     planetsData: [],
     isVehicalsDataLoading: false,
     vehicalsData: []
   },
   reducers: {
-    planetsRequested: (planets, action) => {
-      planets.isPlanetsDataLoading = true;
+    planetsRequested: (findFalcone, action) => {
+      findFalcone.isPlanetsDataLoading = true;
     },
-    planetsReceived: (planets, action) => {
-      planets.planetsData = action.payload;
-      planets.isPlanetsDataLoading = false;
+    planetsReceived: (findFalcone, action) => {
+      findFalcone.planetsData = action.payload;
+      findFalcone.isPlanetsDataLoading = false;
+      findFalcone.selectedData.map((data) => {
+        return (data.availablePlanets = Object.values(findFalcone.planetsData));
+      });
     },
-    planetsFailed: (planets, action) => {
-      planets.isPlanetsDataLoading = false;
+    planetsFailed: (findFalcone, action) => {
+      findFalcone.isPlanetsDataLoading = false;
     },
-    vehicalsRequested: (vehicals, action) => {
-      vehicals.isVehicalsDataLoading = true;
+    vehicalsRequested: (findFalcone, action) => {
+      findFalcone.isVehicalsDataLoading = true;
     },
-    vehicalsReceived: (vehicals, action) => {
-      vehicals.vehicalsData = action.payload;
-      vehicals.isVehicalsDataLoading = false;
+    vehicalsReceived: (findFalcone, action) => {
+      findFalcone.vehicalsData = action.payload;
+      findFalcone.isVehicalsDataLoading = false;
     },
-    vehicalsFailed: (vehicals, action) => {
-      vehicals.isVehicalsDataLoading = false;
+    vehicalsFailed: (findFalcone, action) => {
+      findFalcone.isVehicalsDataLoading = false;
+    },
+    planetSelected: (findFalcone, action) => {
+      findFalcone.selectedData[action.payload.id].selectedPlanet =
+        action.payload.selectedPlanet;
+      const selectedPlanetData = findFalcone.planetsData.filter((data) => {
+        if (data.name === action.payload.selectedPlanet) return data.distance;
+        return null;
+      });
+      findFalcone.selectedData[action.payload.id].selectedPlanetDistance =
+        selectedPlanetData[0].distance;
+      findFalcone.selectedData[action.payload.id].availableVehicals =
+        findFalcone.vehicalsData;
     }
   }
 });
 
-const {
+export const {
   planetsRequested,
   planetsReceived,
   planetsFailed,
   vehicalsRequested,
   vehicalsReceived,
-  vehicalsFailed
+  vehicalsFailed,
+  planetSelected
 } = slice.actions;
 
 export default slice.reducer;

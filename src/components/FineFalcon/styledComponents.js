@@ -9,6 +9,16 @@ export const MainContainer = styled.div`
   height: 100%;
   padding: 10px;
 `;
+export const ChoosePlanetsContainer = styled.ul`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  list-style-type: none;
+  flex-wrap: wrap;
+  padding: 0;
+`;
 export const Footer = styled.div`
   margin: 10px;
 `;
