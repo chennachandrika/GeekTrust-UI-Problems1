@@ -9,8 +9,6 @@ const Vehicals = (props) => {
     const vehicalSpeed = vehicalsData.filter(
       (vehical) => vehical.name === vehicalName
     );
-    console.log(vehicalSpeed, vehicalSpeed[0].speed);
-
     return vehicalSpeed[0].speed;
   };
   const onChangeVehical = (event) => {

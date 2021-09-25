@@ -30,11 +30,12 @@ const FindFalcone = () => {
   const dispatch = useDispatch();
   const checkVehicals = () => {
     const vehicals = selectedData.map((data) => data.selectedVehical);
-    console.log(vehicals);
+    const value = vehicals.filter((vehical) => vehical === "");
+    if (value.length === 0) {
+      setStatus({ isVehicalsSelected: true });
+    }
+    console.log(value);
   };
-  useEffect(() => {
-    checkVehicals();
-  });
 
   useEffect(() => {
     dispatch(loadPlanets());
@@ -66,7 +67,9 @@ const FindFalcone = () => {
       </MainContainer>
 
       <Footer>
-        <Button type="button">Find Falcone</Button>
+        <Button disabled={!isVehicalsSelected} type="button">
+          Find Falcone
+        </Button>
         <ReferenceLink href="https://www.geektrust.in/coding-problem/frontend/space">
           Coding Problem :
           https://www.geektrust.in/coding-problem/frontend/space
